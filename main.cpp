@@ -11,6 +11,9 @@ int main() {
 //    m(0, 1) = -1;
 //    m(1, 1) = m(1, 0) + m(0, 1);
     //std::cout << m << std::endl;
-    Lattice l = Lattice(5, 5, 2, 2, 4);
+    Lattice l = Lattice(5, 9, 2, 2, 4);
+    l.set_constant_field(0);
+    l.set_probability();
     l.init_grid(5);
+    l.print();
 }

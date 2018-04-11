@@ -4,12 +4,12 @@
 
 #include "lattice.h"
 //#include <stdexcept>
-
+#include <string>
 #include <cmath>
 
 Lattice::Lattice(int nx, int ny, float lx, float ly, float max_time) {
-    this->nx = nx;
-    this->ny = ny;
+    this->nx = nx+2;
+    this->ny = ny+2;
     this->lx = lx;
     this->ly = ly;
     this->max_time = max_time;
@@ -20,7 +20,6 @@ Lattice::Lattice(int nx, int ny, float lx, float ly, float max_time) {
     this->dy = this->ly / this->ny;
 
     this->lattice = Eigen::ArrayXXi(this->nx, this->ny);
-    std::cout << this->lattice << std::endl;
 }
 
 void Lattice::update() {
@@ -41,7 +40,7 @@ void Lattice::init_grid(int number_of_particles) {
         while (!found_empty_position) {
             new_x = random_position(mt) % nx;
             new_y = random_position(mt) % ny;
-            if (lattice(new_x,new_y)==0) {
+            if (lattice(new_x,new_y)==0 and constant_field(new_x,new_y) < 1) {
                 found_empty_position = true;
             }
             positions(i,0) = new_x;
@@ -49,10 +48,46 @@ void Lattice::init_grid(int number_of_particles) {
             lattice(new_x,new_y) = 1;
         }
     }
-    std::cout << this->lattice << std::endl;
 }
 
+void Lattice::set_constant_field(float density) {
+    constant_field = Eigen::ArrayXXf(nx,ny);
+    constant_field = 0;
+    constant_field.row(0) = 1;
+    constant_field.col(0) = 1;
+    constant_field.row(nx-1) = 1;
+    constant_field.col(ny-1) = 1;
+    if (density > 0) {
+        std::cout << "Not supported yet" << std::endl;
+    }
+}
 
+void Lattice::set_probability() {
+    base_probs.setRandom();
+    base_probs = (base_probs + 1.)/8;
+    base_probs(1,1)=0;
+    std::cout << base_probs << std::endl;
+}
 Eigen::ArrayXXi Lattice::get_field() {
 
 }
+
+void Lattice::print() {
+    char obs_char = 'X';
+    char part_char = 'o';
+    char empty_char = '.';
+
+    for (int row=0;row < nx;row ++ ) {
+        for (int col=0;col < ny;col ++ ) {
+            if (constant_field(row,col)>=1) {
+                std::cout << obs_char;
+            } else if (lattice(row,col)==1) {
+                std::cout << part_char;
+            } else {
+                std::cout << empty_char;
+            }
+        }
+        std::cout << std::endl;
+    }
+}
+

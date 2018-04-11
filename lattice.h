@@ -18,6 +18,9 @@ public:
 
     Eigen::ArrayXXi get_field();
     void init_grid(int number_of_particles);
+    void set_constant_field(float density);
+    void set_probability();
+    void print();
 
 private:
 
