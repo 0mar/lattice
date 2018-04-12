@@ -8,7 +8,7 @@
 #include <Eigen/Dense>
 #include <iostream>
 #include <random>
-
+#include <memory>
 class Lattice {
 public:
 
@@ -19,23 +19,27 @@ public:
     Eigen::ArrayXXi get_field();
     void init_grid(int number_of_particles);
     void set_constant_field(float density);
-    void set_probability();
+
+    void set_probability(int probability_setting);
     void print();
 
 private:
 
     int nx, ny;
+    int number_of_particles;
     float lx, ly;
     float max_time;
     float dt, time;
     float dx, dy;
-//    std::default_random_engine rng;
-//    std::uniform_int_distribution random_int;
-//    std::uniform_real_distribution<float> random_real;
+    std::shared_ptr<std::random_device> rd;
+    std::shared_ptr<std::mt19937> rng;
+    std::shared_ptr<std::uniform_real_distribution<float>> random_real;
     Eigen::ArrayXXi lattice;
     Eigen::ArrayXXi positions;
     Eigen::ArrayXXf constant_field, dynamic_field;
     Eigen::Array33f base_probs;
+
+    int get_direction_from_probs(Eigen::Array33f);
 };
 
 

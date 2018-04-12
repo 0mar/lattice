@@ -1,19 +1,29 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include "lattice.h"
+#include <unistd.h>
 
-using Eigen::MatrixXd;
+using Eigen::ArrayXXf;
 
 int main() {
-//    MatrixXd m(2, 2);
-//    m(0, 0) = 3;
-//    m(1, 0) = 2.5;
-//    m(0, 1) = -1;
-//    m(1, 1) = m(1, 0) + m(0, 1);
-    //std::cout << m << std::endl;
-    Lattice l = Lattice(5, 9, 2, 2, 4);
+//    ArrayXXf m(10, 10);
+//    for (int i=0;i<10;i++) {
+//        for (int j=0;j<10;j++) {
+//            m(i,j) = i/3. + j/7.;
+//        }
+//    }
+//    std::cout << m << std::endl;
+//    std::cout << m.block<3,3>(3,4) << std::endl;
+//    for (int i=0;i<m.size();i++) {
+//        std::cout << m(i) << std::endl;
+//    }
+    Lattice l = Lattice(200, 20, 2, 2, 4);
     l.set_constant_field(0);
-    l.set_probability();
-    l.init_grid(5);
-    l.print();
+    l.set_probability(3);
+    l.init_grid(300);
+    for (int i = 0; i < 50; i++) {
+        l.print();
+        l.update();
+        sleep(1);
+    }
 }
