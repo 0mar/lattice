@@ -9,37 +9,30 @@
 #include <iostream>
 #include <random>
 #include <memory>
+
 class Lattice {
 public:
+    Lattice(int nx, int ny, float max_time);
 
-    Lattice(int nx, int ny, float lx, float ly, float max_time);
-
-    void update();
+    void set_at(int pos_x, int pos_y, int val);
 
     Eigen::ArrayXXi get_field();
-    void init_grid(int number_of_particles);
-    void set_constant_field(float density);
 
-    void set_probability(int probability_setting);
     void print();
 
-private:
+    float get_random_float();
 
+    int get_connections_in_range(int pos_x, int pos_y, int status, int range);
+
+private:
     int nx, ny;
-    int number_of_particles;
-    float lx, ly;
-    float max_time;
-    float dt, time;
-    float dx, dy;
     std::shared_ptr<std::random_device> rd;
     std::shared_ptr<std::mt19937> rng;
     std::shared_ptr<std::uniform_real_distribution<float>> random_real;
     Eigen::ArrayXXi lattice;
-    Eigen::ArrayXXi positions;
-    Eigen::ArrayXXf constant_field, dynamic_field;
-    Eigen::Array33f base_probs;
 
-    int get_direction_from_probs(Eigen::Array33f);
+    bool exists(int row, int col);
+
 };
 
 

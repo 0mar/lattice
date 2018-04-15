@@ -1,7 +1,6 @@
 #include <iostream>
 #include <Eigen/Dense>
-#include "lattice.h"
-#include <unistd.h>
+#include "simulation.h"
 
 using Eigen::ArrayXXf;
 
@@ -17,13 +16,6 @@ int main() {
 //    for (int i=0;i<m.size();i++) {
 //        std::cout << m(i) << std::endl;
 //    }
-    Lattice l = Lattice(200, 20, 2, 2, 4);
-    l.set_constant_field(0);
-    l.set_probability(3);
-    l.init_grid(300);
-    for (int i = 0; i < 50; i++) {
-        l.print();
-        l.update();
-        sleep(1);
-    }
+    Simulation sim = Simulation(100, 100);
+    sim.run();
 }
