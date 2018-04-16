@@ -16,7 +16,6 @@ public:
 
     void run();
 
-    ;
 private:
     std::shared_ptr<Lattice> lattice;
     void init_grid();

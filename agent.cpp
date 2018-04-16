@@ -12,10 +12,10 @@ Agent::Agent(std::shared_ptr<Lattice> lattice, int id, int pos_x, int pos_y) {
     this->pos_y = pos_y;
     this->status = this->NORMAL;
 
-    params.p_ads = 0.1;
-    params.q_interact = 0.1;
-    params.q_strong = 0.1;
-    params.q_weak = 0.1;
+    params.p_ads = 0.01;
+    params.q_interact = 0.03;
+    params.q_strong = 0.03;
+    params.q_weak = 0.01;
     params.neg_mass = 1;
     params.p_satisfied = 0.8;
 }
@@ -43,7 +43,6 @@ void Agent::update() {
         lattice->set_at(pos_x, pos_y, status);
     }
 }
-
 
 int Agent::get_id() {
     return id;

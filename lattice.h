@@ -35,5 +35,4 @@ private:
 
 };
 
-
 #endif //LATTICE_LATTICE_H
