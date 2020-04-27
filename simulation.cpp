@@ -10,16 +10,20 @@ Simulation::Simulation(int nx, int ny) {
     this->nx = nx;
     this->ny = ny;
     this->lattice = std::make_shared<Lattice>(nx, ny, 100);
-
+    this->is_done = false;
     this->init_grid();
 }
 
 void Simulation::run() {
     for (int i = 0; i < 100; i++) {
-        lattice->print();
+        lattice->count_and_print();
         this->step();
+        if (is_done) {
+            break;
+        }
         sleep(1);
     }
+    lattice->print_totals();
 }
 
 void Simulation::init_grid() {
@@ -36,9 +40,11 @@ void Simulation::init_grid() {
 
 
 void Simulation::step() {
+    bool has_update = false;
     for (unsigned long i = 0; i < agents.size(); i++) {
-        agents.at(i)->update();
+        agents.at(i)->update(has_update);
     }
+    is_done = not has_update;
 }
 
 

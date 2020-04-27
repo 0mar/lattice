@@ -21,6 +21,7 @@ private:
     void init_grid();
     int nx;
     int ny;
+    bool is_done;
     std::vector<std::shared_ptr<Agent>> agents;
     void step();
 

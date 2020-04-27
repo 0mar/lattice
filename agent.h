@@ -26,7 +26,7 @@ public:
 
     int get_location();
 
-    void update();
+    void update(bool &has_update);
 
     int get_num_strong_connections(int status);
 

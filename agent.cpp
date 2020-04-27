@@ -21,8 +21,9 @@ Agent::Agent(std::shared_ptr<Lattice> lattice, int id, int pos_x, int pos_y) {
 }
 
 
-void Agent::update() {
+void Agent::update(bool &has_update) {
     if (status==NORMAL) {
+        has_update = true;
         float prob_neg = get_prob_neg();
         float prob_pos = get_prob_pos();
         float alpha_prob = prob_pos / (prob_pos + prob_neg);

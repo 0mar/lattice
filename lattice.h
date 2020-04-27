@@ -9,6 +9,9 @@
 #include <iostream>
 #include <random>
 #include <memory>
+#include <vector>
+#include <string>
+#include <fstream>
 
 class Lattice {
 public:
@@ -18,7 +21,11 @@ public:
 
     Eigen::ArrayXXi get_field();
 
-    void print();
+    void count_and_print();
+
+    void print_totals();
+
+    void count();
 
     float get_random_float();
 
@@ -30,6 +37,7 @@ private:
     std::shared_ptr<std::mt19937> rng;
     std::shared_ptr<std::uniform_real_distribution<float>> random_real;
     Eigen::ArrayXXi lattice;
+    std::vector<int> totals[4];
 
     bool exists(int row, int col);
 
